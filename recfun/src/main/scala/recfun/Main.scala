@@ -24,22 +24,24 @@ object Main {
    */
   def balance(chars: List[Char]): Boolean = {
     def isBalanced(parenthesesCount:Int, chars: List[Char]): Boolean = {
-      if(parenthesesCount < 0) return false
-      if(chars.isEmpty) return parenthesesCount == 0
-      val currentCount =  if (chars.head == '(') (parenthesesCount + 1) else if (chars.head == ')') (parenthesesCount - 1) else parenthesesCount
-      isBalanced(currentCount, chars.tail)
+      if(parenthesesCount < 0) false
+      else if(chars.isEmpty) parenthesesCount == 0
+      else {
+	      val currentCount =  if (chars.head == '(') (parenthesesCount + 1) else if (chars.head == ')') (parenthesesCount - 1) else parenthesesCount
+	      isBalanced(currentCount, chars.tail)
+      }
     }
     isBalanced(0, chars);
   } 
   
   def countChange(money:Int, coins:List[Int]) :Int = {
     def countChangeInner(money:Int, coins:List[Int]) :Int = {
-      if( money == 0 ) return 1
-      else if (money < 0) return 0
-      else if( coins.isEmpty ) return 0
+      if( money == 0 ) 1
+      else if (money < 0) 0
+      else if( coins.isEmpty ) 0
       else countChangeInner(money , coins.tail) + countChangeInner(money - coins.head, coins)
     }
-    if(money == 0 || coins.isEmpty) return 0
-    else return countChangeInner(money, coins);
+    if(money == 0 || coins.isEmpty) 0
+    else countChangeInner(money, coins);
   }
 }
