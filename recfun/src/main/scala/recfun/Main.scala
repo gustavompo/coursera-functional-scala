@@ -14,15 +14,32 @@ object Main {
   /**
    * Exercise 1
    */
-  def pascal(c: Int, r: Int): Int = ???
+  def pascal(c: Int, r: Int): Int = {
+    if(c == 0 || r == 0 || c == r) 1
+    else pascal(c, r-1) + pascal(c-1, r-1)
+  }
 
   /**
    * Exercise 2
    */
-  def balance(chars: List[Char]): Boolean = ???
-
-  /**
-   * Exercise 3
-   */
-  def countChange(money: Int, coins: List[Int]): Int = ???
+  def balance(chars: List[Char]): Boolean = {
+    def isBalanced(parenthesesCount:Int, chars: List[Char]): Boolean = {
+      if(parenthesesCount < 0) return false
+      if(chars.isEmpty) return parenthesesCount == 0
+      val currentCount =  if (chars.head == '(') (parenthesesCount + 1) else if (chars.head == ')') (parenthesesCount - 1) else parenthesesCount
+      isBalanced(currentCount, chars.tail)
+    }
+    isBalanced(0, chars);
+  } 
+  
+  def countChange(money:Int, coins:List[Int]) :Int = {
+    def countChangeInner(money:Int, coins:List[Int]) :Int = {
+      if( money == 0 ) return 1
+      else if (money < 0) return 0
+      else if( coins.isEmpty ) return 0
+      else countChangeInner(money , coins.tail) + countChangeInner(money - coins.head, coins)
+    }
+    if(money == 0 || coins.isEmpty) return 0
+    else return countChangeInner(money, coins);
+  }
 }
